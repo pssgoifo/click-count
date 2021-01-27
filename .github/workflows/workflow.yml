@@ -16,7 +16,7 @@ on:
 jobs:
   # Run all unit tests.
   run-tests:
-    runs-on: maven:3-openjdk-8
+    runs-on: ubuntu-latest
     steps:
       # Check out the pull request's source code.
       - name: Check out source code
