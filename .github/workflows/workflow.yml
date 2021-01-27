@@ -72,8 +72,8 @@ jobs:
         run: echo ${{ secrets.KUBECONFIG }} | base64 --decode > kubeconfig.yml
 
       # Ensure namespaces are present.
-      - name: Ensure namespaces are present
-        run: kubectl --kubeconfig kubeconfig.yml apply -f manifests/namespace.yaml
+      # - name: Ensure namespaces are present
+      #   run: kubectl --kubeconfig kubeconfig.yml apply -f manifests/namespace.yaml
 
       # Kustomize Kubernetes resources.
       - name: Kustomize Kubernetes resources
