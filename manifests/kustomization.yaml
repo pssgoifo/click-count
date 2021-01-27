@@ -1,0 +1,12 @@
+namespace: prod
+
+resources:
+  - app/deployment.yaml
+  - app/service.yaml
+  - redis/deployment.yaml
+  - redis/service.yaml
+
+images:
+  - name: REPOSITORY:TAG
+    newName: osgoifo/clickcount
+    newTag: latest

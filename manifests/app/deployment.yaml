@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: clickcount-app
+spec:
+  selector:
+    matchLabels:
+      run: clickcount-app
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        run: clickcount-app
+    spec:
+      containers:
+      - name: clickcount-app
+        image: REPOSITORY:TAG
+        ports:
+        - containerPort: 8080
