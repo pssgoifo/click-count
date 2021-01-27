@@ -54,7 +54,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master'
     needs:
-      - run-tests
+      - build-and-release
     steps:
       # Check out source code.
       - name: Check out source code
