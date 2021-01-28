@@ -222,4 +222,4 @@ end
 <!-- markdownlint-ensable -->
 
 
-![CI/CD Workflow](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/pssgoifo/click-count/develop/workflow.puml)
+![CI/CD Workflow](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/pssgoifo/click-count/develop/ci-workflow.puml)
