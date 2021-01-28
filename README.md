@@ -212,3 +212,5 @@ end
 
 @enduml
 ```
+
+![CI/CD Workflow](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/pssgoifo/click-count/develop/workflow.puml)
