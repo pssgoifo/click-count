@@ -56,3 +56,25 @@ resource "aws_eks_node_group" "clickcount" {
     aws_iam_role_policy_attachment.clickcount-node-AmazonEC2ContainerRegistryReadOnly,
   ]
 }
+
+# @TODO: namespace creation raises a permission issue, we will deploy them by hand until it's fixed
+
+# resource "kubernetes_namespace" "staging" {
+#   metadata {
+#     labels = {
+#       app = "clickcount"
+#     }
+
+#     name = "staging"
+#   }
+# }
+
+# resource "kubernetes_namespace" "prod" {
+#   metadata {
+#     labels = {
+#       app = "clickcount"
+#     }
+
+#     name = "prod"
+#   }
+# }

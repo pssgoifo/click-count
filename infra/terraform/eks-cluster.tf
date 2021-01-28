@@ -75,3 +75,7 @@ resource "aws_eks_cluster" "clickcount" {
     aws_iam_role_policy_attachment.clickcount-cluster-AmazonEKSVPCResourceController,
   ]
 }
+
+data "aws_eks_cluster_auth" "clickcount" {
+  name = "clickcount"
+}
