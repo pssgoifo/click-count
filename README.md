@@ -108,10 +108,6 @@ mapUsers: |
 
 Clickcount utilizes GitHub Actions (<https://docs.github.com/en/actions>) and gitflow (<https://danielkummer.github.io/git-flow-cheatsheet/>) to build and deploy itself.
 
-<!-- markdownlint-disable -->
-<noscript>
-<!-- markdownlint-ensable -->
-
 ```plantuml
 @startuml
 title CI/CD workflow
@@ -216,10 +212,5 @@ end
 
 @enduml
 ```
-
-<!-- markdownlint-disable -->
-</noscript>
-<!-- markdownlint-ensable -->
-
 
 ![CI/CD Workflow](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/pssgoifo/click-count/develop/ci-workflow.puml)
