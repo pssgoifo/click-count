@@ -18,7 +18,8 @@ on:
 jobs:
   # Run all unit tests.
   run-tests:
-    runs-on: ubuntu-latest
+    #runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, X64]
     steps:
       # Check out the pull request's source code.
       - name: Check out source code
@@ -33,7 +34,8 @@ jobs:
 
   # Build and release.
   build-and-release:
-    runs-on: ubuntu-latest
+    #runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, X64]
     needs:
       - run-tests
     steps:
@@ -53,7 +55,8 @@ jobs:
 
   # Deploy to Kubernetes.
   deploy-to-staging:
-    runs-on: ubuntu-latest
+    #runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, X64]
     if: github.ref == 'refs/heads/develop'
     needs:
       - build-and-release
@@ -90,7 +93,8 @@ jobs:
 
   # Deploy to Kubernetes.
   deploy-to-prod:
-    runs-on: ubuntu-latest
+    #runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, X64]
     if: github.ref == 'refs/heads/master'
     needs:
       - build-and-release
