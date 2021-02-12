@@ -20,7 +20,6 @@ jobs:
   run-tests:
     #runs-on: ubuntu-latest
     runs-on: [self-hosted, linux, X64]
-    if: false
     steps:
       # Check out the pull request's source code.
       - name: Check out source code
@@ -76,8 +75,8 @@ jobs:
       SERVICE_ACCOUNT_NAME: github-actions
       NAMESPACE: staging
     if: github.ref == 'refs/heads/develop'
-    # needs:
-    #   - build-and-release
+    needs:
+      - build-and-release
     steps:
       # Check out source code.
       - name: Check out source code
