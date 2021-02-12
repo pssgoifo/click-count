@@ -10,12 +10,13 @@ on:
     branches:
       - master
       - develop
+    tags:
+    
   pull_request:
     branches:
       - master
       - develop
       - feature/**
-  tags:
 
 jobs:
   # Run all unit tests.
