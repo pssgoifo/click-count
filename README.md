@@ -1,6 +1,6 @@
 # Click Count application
 
-[![Build Status](https://travis-ci.org/xebia-france/click-count.svg)](https://travis-ci.org/xebia-france/click-count)
+![main-worklfow](https://github.com/pssgoifo/click-count/workflows/main-worklfow/badge.svg)
 
 <!-- @import "[TOC]" {cmd="toc" depthFrom=2 depthTo=6 orderedList=false} -->
 
@@ -15,15 +15,14 @@
 
 <!-- /code_chunk_output -->
 
-
 This java application is a revolutionary Click Counter brought to you by Click Paradise&trade;.
 
 ## Requirements
 
-* terraform 0.12.13+ (or Docker)
-* kubectl
-* aws-cli
-* GitHub CLI 1.4+
+- terraform 0.12.13+ (or Docker)
+- kubectl
+- aws-cli
+- GitHub CLI 1.4+
 
 ```bash
 aws eks --region us-east-1 update-kubeconfig --name "terraform-eks-clickcount"
@@ -108,7 +107,7 @@ Insert/update the `mapUsers` map and save:
 
 Clickcount utilizes GitHub Actions (<https://docs.github.com/en/actions>) and gitflow (<https://danielkummer.github.io/git-flow-cheatsheet/>) to build and deploy itself.
 
-![CI/CD Workflow](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/pssgoifo/click-count/develop/ci-workflow.puml)
+![CI/CD Workflow](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/pssgoifo/click-count/master/ci-workflow.puml)
 
 Set up CI/CD:
 

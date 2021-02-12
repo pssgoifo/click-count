@@ -1,4 +1,4 @@
-name: main-worklfow
+name: build
 
 env:
   IMAGE_REPOSITORY: osgoifo/clickcount
