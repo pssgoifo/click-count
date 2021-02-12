@@ -70,6 +70,9 @@ jobs:
   deploy-to-staging:
     #runs-on: ubuntu-latest
     runs-on: [self-hosted, linux, X64]
+    env:
+      SERVICE_ACCOUNT_NAME: github-actions
+      NAMESPACE: staging
     if: github.ref == 'refs/heads/develop'
     needs:
       - build-and-release
@@ -93,16 +96,20 @@ jobs:
       - name: Kustomize Kubernetes resources
         working-directory: ./manifests
         run: |-
-          kustomize edit set namespace staging
+          kustomize edit set namespace $NAMESPACE
           kustomize edit set image REPOSITORY:TAG=${IMAGE_REPOSITORY}:sha-${GITHUB_SHA::7}
 
       # Deploy to Kubernetes.
       - name: Deploy to Kubernetes
-        run: kubectl --kubeconfig kubeconfig.yml apply --kustomize manifests/
+        run: |-
+          CLUSTER_NAME=$(kubectl config get-contexts "$context" | awk '{print $3}' | tail -n 1)
+          kubectl config use-context "${SERVICE_ACCOUNT_NAME}-${NAMESPACE}-${CLUSTER_NAME}" \
+            --kubeconfig="${KUBECFG_FILE_NAME}"
+          kubectl --kubeconfig kubeconfig.yml apply --kustomize manifests/
 
       # Validate deployment.
       - name: Validate deployment
-        run: kubectl --kubeconfig kubeconfig.yml rollout status --timeout 120s deployment/clickcount-app -n staging
+        run: kubectl --kubeconfig kubeconfig.yml rollout status --timeout 120s deployment/clickcount-app -n $NAMESPACE
 
   # Deploy to Kubernetes.
   deploy-to-prod:
