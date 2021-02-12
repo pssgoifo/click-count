@@ -97,11 +97,11 @@ kubectl edit -n kube-system configmap/aws-auth
 Insert/update the `mapUsers` map and save:
 
 ```yaml
-mapUsers: |
-  - userarn: arn:aws:iam::<aws_project_id>:user/<aws_username>
-    username: <aws_username>
-    groups:
-      - system:masters
+  mapUsers: |
+    - userarn: arn:aws:iam::<aws_project_id>:user/<aws_username>
+      username: <aws_username>
+      groups:
+        - system:masters
 ```
 
 ## CI/CD
@@ -109,3 +109,9 @@ mapUsers: |
 Clickcount utilizes GitHub Actions (<https://docs.github.com/en/actions>) and gitflow (<https://danielkummer.github.io/git-flow-cheatsheet/>) to build and deploy itself.
 
 ![CI/CD Workflow](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/pssgoifo/click-count/develop/ci-workflow.puml)
+
+Set up CI/CD:
+
+```bash
+./setup_cicd.sh
+```
