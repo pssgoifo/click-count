@@ -1,6 +1,6 @@
 # Click Count application
 
-![main-worklfow](https://github.com/pssgoifo/click-count/workflows/main-worklfow/badge.svg)
+![Build](https://github.com/pssgoifo/click-count/workflows/main-worklfow/badge.svg)
 
 <!-- @import "[TOC]" {cmd="toc" depthFrom=2 depthTo=6 orderedList=false} -->
 
