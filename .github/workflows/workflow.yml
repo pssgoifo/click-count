@@ -104,8 +104,6 @@ jobs:
       # Deploy to Kubernetes.
       - name: Deploy to Kubernetes
         run: |-
-          set -x
-          kubectl --kubeconfig "${KUBECFG_FILE_NAME}" config get-contexts
           CLUSTER_NAME=$(kubectl --kubeconfig "${KUBECFG_FILE_NAME}" config get-contexts "$(kubectl --kubeconfig "${KUBECFG_FILE_NAME}" config current-context)" | awk '{print $3}' | tail -n 1)
           kubectl --kubeconfig "${KUBECFG_FILE_NAME}" config use-context "${SERVICE_ACCOUNT_NAME}-${NAMESPACE}-${CLUSTER_NAME}" \
           kubectl --kubeconfig "${KUBECFG_FILE_NAME}" apply --kustomize manifests/
