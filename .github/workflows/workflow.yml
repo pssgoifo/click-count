@@ -98,7 +98,7 @@ jobs:
         working-directory: ./manifests
         run: |-
           kustomize edit set namespace $NAMESPACE
-          kustomize edit set image REPOSITORY:TAG=${IMAGE_REPOSITORY}:sha-${GITHUB_SHA::7}
+          kustomize edit set image REPOSITORY:TAG=${IMAGE_REPOSITORY}::sha-${{ github.sha }}
 
       # Deploy to Kubernetes.
       - name: Deploy to Kubernetes
