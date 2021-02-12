@@ -10,10 +10,13 @@ on:
     branches:
       - master
       - develop
+    tags:
+    
   pull_request:
     branches:
       - master
       - develop
+      - feature/**
 
 jobs:
   # Run all unit tests.
@@ -30,7 +33,7 @@ jobs:
 
       # Run unit tests.
       - name: Run unit tests
-        run: mvn test
+        run: mvn test # there are no unit test (yet), but there definitely should
 
   # Build and release.
   build-and-release:
@@ -42,16 +45,6 @@ jobs:
       # Check out source code.
       - name: Check out source code
         uses: actions/checkout@v2
-
-      # Build and push container image.
-      # - name: Build and push container image
-      #   uses: docker/build-push-action@v1
-      #   with:
-      #     username: ${{ secrets.DOCKER_USERNAME }}
-      #     password: ${{ secrets.DOCKER_PASSWORD }}
-      #     repository: ${{ env.IMAGE_REPOSITORY }}
-      #     tag_with_ref: true
-      #     tag_with_sha: true # sha-${GITHUB_SHA::7}
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
       - name: Login to DockerHub
@@ -70,13 +63,13 @@ jobs:
   deploy-to-staging:
     #runs-on: ubuntu-latest
     runs-on: [self-hosted, linux, X64]
+    if: github.ref == 'refs/heads/master'
+    needs:
+      - build-and-release
     env:
       KUBECONFIG: kubeconfig.yml
       SERVICE_ACCOUNT_NAME: github-actions
       NAMESPACE: staging
-    if: github.ref == 'refs/heads/develop'
-    needs:
-      - build-and-release
     steps:
       # Check out source code.
       - name: Check out source code
@@ -115,13 +108,13 @@ jobs:
   deploy-to-prod:
     #runs-on: ubuntu-latest
     runs-on: [self-hosted, linux, X64]
+    if: github.ref == 'refs/heads/master' && github.event_name == 'tag'
+    needs:
+      - build-and-release
     env:
       KUBECONFIG: kubeconfig.yml
       SERVICE_ACCOUNT_NAME: github-actions
       NAMESPACE: prod
-    if: github.ref == 'refs/heads/master'
-    needs:
-      - build-and-release
     steps:
       # Check out source code.
       - name: Check out source code
