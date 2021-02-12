@@ -120,7 +120,7 @@ jobs:
       SERVICE_ACCOUNT_NAME: github-actions
       NAMESPACE: prod
     if: github.ref == 'refs/heads/master'
-     needs:
+    needs:
       - build-and-release
     steps:
       # Check out source code.
