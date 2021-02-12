@@ -71,7 +71,7 @@ jobs:
     #runs-on: ubuntu-latest
     runs-on: [self-hosted, linux, X64]
     env:
-      KUBECFG_FILE_NAME: kubeconfig.yml
+      KUBECONFIG: kubeconfig.yml
       SERVICE_ACCOUNT_NAME: github-actions
       NAMESPACE: staging
     if: github.ref == 'refs/heads/develop'
@@ -91,25 +91,25 @@ jobs:
 
       # Configure kubectl.
       - name: Configure kubectl
-        run: echo ${{ secrets.KUBECONFIG }} | base64 --decode > kubeconfig.yml
+        run: echo ${{ secrets.KUBECONFIG }} | base64 --decode > ${KUBECONFIG:?}
 
       # Kustomize Kubernetes resources.
       - name: Kustomize Kubernetes resources
         working-directory: ./manifests
         run: |-
           kustomize edit set namespace $NAMESPACE
-          kustomize edit set image REPOSITORY:TAG=${IMAGE_REPOSITORY}::sha-${{ github.sha }}
+          kustomize edit set image REPOSITORY:TAG=${IMAGE_REPOSITORY}:sha-${{ github.sha }}
 
       # Deploy to Kubernetes.
       - name: Deploy to Kubernetes
         run: |-
-          CLUSTER_NAME=$(kubectl --kubeconfig "${KUBECFG_FILE_NAME}" config get-contexts "$(kubectl --kubeconfig "${KUBECFG_FILE_NAME}" config current-context)" | awk '{print $3}' | tail -n 1)
-          kubectl --kubeconfig "${KUBECFG_FILE_NAME}" config use-context "${SERVICE_ACCOUNT_NAME}-${NAMESPACE}-${CLUSTER_NAME}"
-          kubectl --kubeconfig "${KUBECFG_FILE_NAME}" apply --kustomize manifests/
+          CLUSTER_NAME=$(kubectl config get-contexts "$(kubectl config current-context)" | awk '{print $3}' | tail -n 1)
+          kubectl config use-context "${SERVICE_ACCOUNT_NAME}-${NAMESPACE}-${CLUSTER_NAME}"
+          kubectl apply --kustomize manifests/
 
       # Validate deployment.
       - name: Validate deployment
-        run: kubectl --kubeconfig "${KUBECFG_FILE_NAME}" rollout status --timeout 120s deployment/clickcount-app -n $NAMESPACE
+        run: kubectl rollout status --timeout 120s deployment/clickcount-app -n $NAMESPACE
 
   # Deploy to Kubernetes.
   deploy-to-prod:
