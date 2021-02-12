@@ -107,7 +107,7 @@ jobs:
   deploy-to-prod:
     #runs-on: ubuntu-latest
     runs-on: [self-hosted, linux, X64]
-    if: github.ref == 'refs/heads/master' && github.event_name == 'tag'
+    if: github.ref == 'refs/heads/master' && startsWith(github.ref, 'refs/tags/')
     needs:
       - build-and-release
     env:
