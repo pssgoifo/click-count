@@ -11,7 +11,7 @@ on:
       - master
       - develop
     tags:
-    
+      - '**'
   pull_request:
     branches:
       - master
@@ -57,7 +57,6 @@ jobs:
         with:
           push: true
           tags: ${{ env.IMAGE_REPOSITORY }}:latest,${{ env.IMAGE_REPOSITORY }}:sha-${{ github.sha }}
-
 
   # Deploy to Kubernetes.
   deploy-to-staging:
