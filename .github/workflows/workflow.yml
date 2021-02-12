@@ -20,6 +20,7 @@ jobs:
   run-tests:
     #runs-on: ubuntu-latest
     runs-on: [self-hosted, linux, X64]
+    if: false
     steps:
       # Check out the pull request's source code.
       - name: Check out source code
@@ -74,8 +75,8 @@ jobs:
       SERVICE_ACCOUNT_NAME: github-actions
       NAMESPACE: staging
     if: github.ref == 'refs/heads/develop'
-    needs:
-      - build-and-release
+    # needs:
+    #   - build-and-release
     steps:
       # Check out source code.
       - name: Check out source code
@@ -104,7 +105,7 @@ jobs:
         run: |-
           kubectl --kubeconfig kubeconfig.yml config get-contexts
           CLUSTER_NAME=$(kubectl --kubeconfig kubeconfig.yml config get-contexts "$(kubectl --kubeconfig kubeconfig.yml config current-context)" | awk '{print $3}' | tail -n 1)
-          kubectl config use-context "${SERVICE_ACCOUNT_NAME}-${NAMESPACE}-${CLUSTER_NAME}" \
+          kubectl --kubeconfig kubeconfig.yml config use-context "${SERVICE_ACCOUNT_NAME}-${NAMESPACE}-${CLUSTER_NAME}" \
             --kubeconfig="${KUBECFG_FILE_NAME}"
           kubectl --kubeconfig kubeconfig.yml apply --kustomize manifests/
 
